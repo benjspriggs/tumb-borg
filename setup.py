@@ -7,4 +7,7 @@ setup(name='tumb-borg',
         author_email='benjspriggs@sprico.com',
         license='Apache 3.0',
         description='Simple poetry uploader.',
+        install_requires = [
+            'selenium'
+            ],
         py_modules=['tumb_borg'])
