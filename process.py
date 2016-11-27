@@ -34,6 +34,6 @@ def to_dictionary(poem_lines):
             d['content'].append(line) # do not strip to preserve indentation
     for line in tags:
         for tag in \
-            (t for t in line.split( hashtag ) if t):
+            (t.strip() for t in line.split( hashtag ) if t):
             d['tags'].append(tag)
     return d
