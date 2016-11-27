@@ -27,11 +27,11 @@ def to_dictionary(poem_lines):
     tags = []
     for line in poem_lines:
         if line.startswith( delineator ):
-            d['title'] = line
+            d['title'] = line.lstrip( delineator ).strip()
         elif line.startswith( hashtag ):
             tags.append(line)
         else:
-            d['content'].append(line)
+            d['content'].append(line) # do not strip to preserve indentation
     for line in tags:
         for tag in \
             (t for t in line.split( hashtag ) if t):
