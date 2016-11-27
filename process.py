@@ -33,6 +33,7 @@ def to_dictionary(poem_lines):
         else:
             d['content'].append(line)
     for line in tags:
-        for tag in (t for t in line.split( hashtag ) if t):
+        for tag in \
+            (t for t in line.split( hashtag ) if t):
             d['tags'].append(tag)
     return d
