@@ -4,4 +4,5 @@ import process
 
 if __name__ == "__main__":
     print('Hello world!')
-    print(process.to_poem('#something something'))
+    for poem in process.generate_poems('test.txt'):
+        print(poem)
