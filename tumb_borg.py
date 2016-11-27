@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import process
+from process import *
 
 if __name__ == "__main__":
     print('Hello world!')
-    for poem in process.generate_poems('test.txt'):
+    for poem in map(to_dictionary, generate_poems('example.txt')):
         print(poem)
