@@ -18,15 +18,21 @@ def generate_poems(filename):
                 g.append(line)
         yield g
 
+# convert a list of strings
+# into a poem dictionary
 def to_dictionary(poem_lines):
     d = {}
     d['content'] = []
     d['tags'] = []
+    tags = []
     for line in poem_lines:
         if line.startswith( delineator ):
             d['title'] = line
         elif line.startswith( hashtag ):
-            d['tags'].append(line)
+            tags.append(line)
         else:
             d['content'].append(line)
+    for line in tags:
+        for tag in (t for t in line.split( hashtag ) if t):
+            d['tags'].append(tag)
     return d
