@@ -2,7 +2,6 @@
 from tumblpy import Tumblpy as T
 
 def authorize(KEY, SECRET, CALLBACK):
-    # out : (authorization url, oauth secret)
     def get_authorization_properties():
         t = T(KEY, SECRET)
         return t.get_authentication_tokens(callback_url=CALLBACK)
