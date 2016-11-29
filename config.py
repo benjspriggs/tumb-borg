@@ -7,5 +7,8 @@ def read_yaml(filename, readf=yaml.load):
         return readf(f)
     
 def config(filename='app.secret.yml'):
-    return read_yaml(filename)
+    def filtered_dict(d):
+        return { key: d[key] for key in 
+                ['key', 'secret', 'callback'] }
+    return filtered_dict(read_yaml(filename))
 
