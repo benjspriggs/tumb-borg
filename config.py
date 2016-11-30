@@ -6,9 +6,13 @@ def read_yaml(filename, readf=yaml.load):
     with open(filename, 'r') as f:
         return readf(f)
     
-def config(filename='app.secret.yml'):
-    def filtered_dict(d):
-        return { key: d[key] for key in 
-                ['key', 'secret', 'callback'] }
-    return filtered_dict(read_yaml(filename))
+def app_config(filename='app.secret.yml'):
+    return read_yaml(filename)
+
+def store(yaml_obj, filename):
+    with open(filename, 'wb') as f:
+        yaml.dump(yaml_obj, f)
+
+def user_config(filename='user.secret.yml'):
+    return read_yaml(filename)
 

@@ -5,7 +5,7 @@ from urlparse import urlparse, parse_qs
 def authorize(KEY, SECRET, CALLBACK):
     def get_authorization_properties():
         t = T(KEY, SECRET)
-        return t
+        return t \
             .get_authentication_tokens(
                         callback_url=CALLBACK)
 
