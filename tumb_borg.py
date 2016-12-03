@@ -7,6 +7,8 @@ from authorize import *
 from pprint import pprint
 from interactive import *
 
+BATCH = "poem, poetry, spilled ink"
+
 def authorize_from_config(filename):
     c = app_config(filename)
     return authorize(c['key'], c['secret'], c['callback'])
@@ -16,7 +18,7 @@ def post_poems(auth, ident, poem_generator):
     def queue_text_post(payload):
         return { 'type': 'text',
                 'state': 'queue',
-                'tags': ', '.join(payload['tags']),
+                'tags': ', '.join(payload['tags']) + ", " + BATCH,
                 'body': '\n'.join(payload['content']),
                 'title': '// %s' % payload['title'] }
     for poem in (queue_text_post(p) for p in poem_generator):
