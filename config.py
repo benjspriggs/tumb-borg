@@ -1,11 +1,17 @@
 #!/usr/bin/python
 
 import yaml
+import sys
 
 def read_yaml(filename, readf=yaml.load):
-    with open(filename, 'r') as f:
-        return readf(f)
-    
+    try:
+        with open(filename, 'r') as f:
+            return readf(f)
+    except IOError:
+        print("File '%s' not found." % filename)
+        sys.exit(1)
+
+
 def app_config(filename='app.secret.yml'):
     return read_yaml(filename)
 
