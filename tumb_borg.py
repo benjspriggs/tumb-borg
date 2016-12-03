@@ -5,6 +5,7 @@ from process import *
 from config import *
 from authorize import *
 from pprint import pprint
+from interactive import *
 
 def authorize_from_config(filename):
     c = app_config(filename)
@@ -31,13 +32,15 @@ if __name__ == "__main__":
         print('./tumb_borg <blogname> <filename>')
         sys.exit(1)
     # authorize
+    print('Found the following poems:')
+    for poem in poem_dicts(sys.argv[2]):
+        print_poem(poem)
     auth = authorize_from_config('app.secret.yml')
     # store the key for now TODO: implement
     # store(app_config())
     # check that the user can post to this blog
     user_info = auth.post('user/info')
-    for blog in user_info['user']['blogs']:
-        pprint(blog)
     post_poems(auth, \
-            'benjspriggs.tumblr.com', \
-            map(to_dictionary, generate_poems('example.txt')))
+            sys.argv[1], \
+            poem_dicts(sys.argv[2]))
+    print('Finished!')
