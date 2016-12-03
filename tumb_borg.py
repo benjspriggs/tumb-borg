@@ -39,7 +39,6 @@ if __name__ == "__main__":
     # store the key for now TODO: implement
     # store(app_config())
     # check that the user can post to this blog
-    user_info = auth.post('user/info')
     post_poems(auth, \
             sys.argv[1], \
             poem_dicts(sys.argv[2]))
