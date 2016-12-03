@@ -40,7 +40,7 @@ if __name__ == "__main__":
     auth = authorize_from_config('app.secret.yml')
     # store the key for now TODO: implement
     # store(app_config())
-    # check that the user can post to this blog
+    # check that the user can post to this blog TODO: implement
     post_poems(auth, \
             sys.argv[1], \
             poem_dicts(sys.argv[2]))
