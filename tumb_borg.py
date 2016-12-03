@@ -18,14 +18,14 @@ def post_poems(auth, ident, poem_generator):
                 'state': 'queue',
                 'tags': ', '.join(payload['tags']),
                 'body': '\n'.join(payload['content']),
-                'title': payload['title'] }
+                'title': '// %s' % payload['title'] }
     for poem in (queue_text_post(p) for p in poem_generator):
         print(poem)
         print(auth.post('blog/%s/post' % ident, \
             params=poem))
 
 def poem_dicts(filename):
-    return (to_dictionary(poem) for poem in generate_poems('example.txt'))
+    return (to_dictionary(poem) for poem in generate_poems(filename))
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
