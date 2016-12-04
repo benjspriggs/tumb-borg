@@ -1,11 +1,8 @@
 #!/usr/bin/python
 
 import sys
-from process import *
-from config import *
-from authorize import *
+from tumb_borg import *
 from pprint import pprint
-from interactive import *
 
 BATCH = "poem, poetry, spilled ink"
 
