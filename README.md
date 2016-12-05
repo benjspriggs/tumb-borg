@@ -1,7 +1,7 @@
 # tumb-borg
 A tumblr poetry uploader.
 
-# Run
+## Run
 ```
 python tumb_borg.py <blog-identifier> <filename>
 ```
