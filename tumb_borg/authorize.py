@@ -1,6 +1,9 @@
 #!/usr/bin/python
 from tumblpy import Tumblpy as T
-from urlparse import urlparse, parse_qs
+try:
+    from urllib.parse import urlparse, parse_qs
+except ImportError:
+    from urlparse import urlparse, parse_qs
 
 def authorize(KEY, SECRET, CALLBACK):
     def get_authorization_properties():
