@@ -30,3 +30,10 @@ secret: <Secret Key>
 callback: <your callback url>
 [batch-tags]: '<optional batch tags that are added to each post>'
 ```
+### Python 2
+If you are getting the following error:
+```shell
+ImportError: No module named builtins
+```
+Make sure to update future from pip:
+``pip install future --upgrade``
