@@ -37,3 +37,5 @@ ImportError: No module named builtins
 ```
 Make sure to update future from pip:
 ``pip install future --upgrade``
+### Ubuntu
+Make sure to install the ``python3-setuptools`` and ``python3-pip`` packages from apt, if you want to use the Python 3 version of this script.
