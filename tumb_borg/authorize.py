@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from tumblpy import Tumblpy as T
+from builtins import input
 try:
     from urllib.parse import urlparse, parse_qs
 except ImportError:
@@ -18,7 +19,7 @@ def authorize(KEY, SECRET, CALLBACK):
         print('Please connect with Tumblr via: \n%s' \
                 % auth_p['auth_url'])
         result_url = \
-            raw_input("Copy and paste the accepting url: ") 
+            input("Copy and paste the accepting url: ") 
         return result_url
 
     def query_string(url):

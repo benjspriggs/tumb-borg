@@ -28,4 +28,5 @@ Your app key/ secret etc goes in a file ``app.secret.yml`` with the following ke
 key: <OAuth Consumer Key>
 secret: <Secret Key>
 callback: <your callback url>
+[batch-tags]: '<optional batch tags that are added to each post>'
 ```

@@ -8,7 +8,7 @@ hashtag = "#"
 def generate_poems(filename):
     g = []
     # get to the first poem in the file
-    with open(filename, 'rb') as f:
+    with open(filename, 'r') as f:
         for line in f:
             line = line.rstrip()
             if line.startswith( delineator ) and g:
