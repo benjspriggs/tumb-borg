@@ -34,15 +34,17 @@ def poem_dicts(filename):
             for poem \
             in process.generate_poems(filename))
 
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print('./tumb_borg <blogname> <filename> [<config-filename>]')
-        sys.exit(1)
-    print('Found the following poems:')
-    for poem in poem_dicts( \
-            os.path.realpath(sys.argv[2])):
-        interactive.print_poem(poem)
+def usage():
+    print('usage: ./tumb_borg.py <blogname> <filename> [<config-filename>]')
+    print('to see what would be posted: ./tumb_borg.py <filenames>')
+    sys.exit(1)
 
+def validate_arguments(argv):
+    if len(sys.argv) < 3 or not os.path.exists(sys.argv[1]):
+        usage()
+
+# ./tumb_borg.py <blogname> <filename> [<config-filename>]
+def batch_post_poems(argv):
     blogname = sys.argv[1]
     filename = sys.argv[2]
     setting  = None
@@ -65,4 +67,16 @@ if __name__ == "__main__":
             poem_dicts(filename), \
             batch
             )
+
+
+if __name__ == "__main__":
+    validate_arguments(sys.argv)
+
+    print('Found the following poems:')
+    for poem in poem_dicts( \
+            os.path.realpath(sys.argv[2])):
+        interactive.print_poem(poem)
+
+    batch_post_poems(sys.argv)
+
     print('Finished!')
