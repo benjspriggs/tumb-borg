@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import sys, os
-from tumb_borg import *
+from lib import *
 from pprint import pprint
 
 def authorize_from_config(filename):
@@ -14,9 +14,15 @@ def usage():
     sys.exit(1)
 
 def validate_arguments(argv):
-    if len(sys.argv) < 3 \
-    or not os.path.exists(sys.argv[1]):
+    if len(argv) < 3 \
+    and not os.path.exists(argv[1]):
         usage()
+
+# generator for poems from a filename
+def poem_dicts(filename):
+    return (process.to_dictionary(poem) \
+            for poem \
+            in process.generate_poems(filename))
 
 # ./tumb_borg.py <blogname> <filename> [<config-filename>]
 def batch_post_poems(blogname, filename, setting='app.secret.yml'):
@@ -45,10 +51,6 @@ def batch_post_poems(blogname, filename, setting='app.secret.yml'):
             print(poem)
             print(auth.post('blog/%s/post' % ident, \
                     params=poem))
-        def poem_dicts(filename):
-            return (process.to_dictionary(poem) \
-                    for poem \
-                    in process.generate_poems(filename))
     post_poems(auth, \
             blogname, \
             poem_dicts(filename), \
@@ -59,12 +61,13 @@ def batch_post_poems(blogname, filename, setting='app.secret.yml'):
 if __name__ == "__main__":
     validate_arguments(sys.argv)
 
-    print('Found the following poems:')
-    for poem in poem_dicts( \
-            os.path.realpath(sys.argv[2])):
-        interactive.print_poem(poem)
-
-    # ./tumb_borg.py <blogname> <filename> [<settings-file>]
-    batch_post_poems(sys.argv[1], sys.argv[2], sys.argv[3])
+    if len(sys.argv) < 3:
+        print('Found the following poems:')
+        for poem in poem_dicts( \
+                os.path.realpath(sys.argv[1])):
+            interactive.print_poem_full(poem)
+    else:
+        # ./tumb_borg.py <blogname> <filename> [<settings-file>]
+        batch_post_poems(sys.argv[1], sys.argv[2], sys.argv[3])
 
     print('Finished!')
