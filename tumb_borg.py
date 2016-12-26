@@ -19,7 +19,7 @@ def validate_arguments(argv):
         usage()
 
 # generator for poems from a filename
-def poem_dicts(filename):
+def poems_from_file(filename):
     return (process.to_dictionary(poem) \
             for poem \
             in process.generate_poems(filename))
@@ -53,7 +53,7 @@ def batch_post_poems(blogname, filename, setting='app.secret.yml'):
                     params=poem))
     post_poems(auth, \
             blogname, \
-            poem_dicts(filename), \
+            poems_from_file(filename), \
             batch
             )
 
@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 3:
         print('Found the following poems:')
-        for poem in poem_dicts( \
+        for poem in poems_from_file( \
                 os.path.realpath(sys.argv[1])):
             interactive.print_poem_full(poem)
     else:
