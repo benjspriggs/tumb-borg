@@ -68,6 +68,10 @@ if __name__ == "__main__":
             interactive.print_poem_full(poem)
     else:
         # ./tumb_borg.py <blogname> <filename> [<settings-file>]
-        batch_post_poems(sys.argv[1], sys.argv[2], sys.argv[3])
+        if len(sys.argv) < 4:
+            settings = None
+        else:
+            settings = sys.argv[3]
+        batch_post_poems(sys.argv[1], sys.argv[2], settings)
 
     print('Finished!')
