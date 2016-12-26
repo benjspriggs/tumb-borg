@@ -68,7 +68,7 @@ if __name__ == "__main__":
             interactive.print_poem_full(poem)
     else:
         # ./tumb_borg.py <blogname> <filename> [<settings-file>]
-        if len(sys.argv) < 4:
+        if len(sys.argv) < 4: # TODO: Make this default argument-able
             settings = 'app.secret.yml'
         else:
             settings = sys.argv[3]
