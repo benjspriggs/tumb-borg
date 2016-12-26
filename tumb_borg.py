@@ -14,21 +14,12 @@ def usage():
     sys.exit(1)
 
 def validate_arguments(argv):
-    if len(sys.argv) < 3 or not os.path.exists(sys.argv[1]):
+    if len(sys.argv) < 3 \
+    or not os.path.exists(sys.argv[1]):
         usage()
 
 # ./tumb_borg.py <blogname> <filename> [<config-filename>]
-def batch_post_poems(argv):
-    blogname = argv[1]
-    filename = argv[2]
-    setting  = None
-
-    # authorize
-    if len(argv) >= 4:
-        setting = argv[3]
-    else:
-        setting = 'app.secret.yml'
-
+def batch_post_poems(blogname, filename, setting='app.secret.yml'):
     def get_batch_tags(filename):
         c = config.app_config(filename)
         return c['batch-tags']
@@ -73,6 +64,7 @@ if __name__ == "__main__":
             os.path.realpath(sys.argv[2])):
         interactive.print_poem(poem)
 
-    batch_post_poems(sys.argv)
+    # ./tumb_borg.py <blogname> <filename> [<settings-file>]
+    batch_post_poems(sys.argv[1], sys.argv[2], sys.argv[3])
 
     print('Finished!')
