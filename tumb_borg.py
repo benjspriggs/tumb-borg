@@ -25,7 +25,7 @@ def poems_from_file(filename):
             in process.generate_poems(filename))
 
 # ./tumb_borg.py <blogname> <filename> [<config-filename>]
-def batch_post_poems(blogname, filename, setting='app.secret.yml'):
+def batch_post_poems(blogname, filename, setting):
     def get_batch_tags(filename):
         c = config.app_config(filename)
         return c['batch-tags']
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     else:
         # ./tumb_borg.py <blogname> <filename> [<settings-file>]
         if len(sys.argv) < 4:
-            settings = None
+            settings = 'app.secret.yml'
         else:
             settings = sys.argv[3]
         batch_post_poems(sys.argv[1], sys.argv[2], settings)
