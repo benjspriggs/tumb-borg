@@ -15,7 +15,7 @@ def usage():
 
 def validate_arguments(argv):
     if len(argv) < 3 \
-    and not os.path.exists(argv[1]):
+    and (len (argv) is 1 and not os.path.exists(argv[1])):
         usage()
 
 # generator for poems from a filename
