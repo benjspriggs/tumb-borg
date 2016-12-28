@@ -4,10 +4,6 @@ import sys, os
 from lib import *
 from pprint import pprint
 
-def authorize_from_config(filename):
-    c = config.app_config(filename)
-    return authorize.authorize(c['key'], c['secret'], c['callback'])
-
 def usage():
     print('usage: ./tumb_borg.py <blogname> <filename> [<config-filename>]')
     print('to see what would be posted: ./tumb_borg.py <filenames>')
@@ -15,20 +11,29 @@ def usage():
 
 def validate_arguments(argv):
     if len(argv) < 3 \
-    and (len (argv) is 1 and not os.path.exists(argv[1])):
+    and (len (argv) is 1 \
+        and not os.path.exists(argv[1])):
         usage()
 
-# generator for poems from a filename
+# returns a generator for poems from a filename
 def poems_from_file(filename):
     return (process.to_dictionary(poem) \
             for poem \
             in process.generate_poems(filename))
 
+
 # ./tumb_borg.py <blogname> <filename> [<config-filename>]
+# Post all poems contained in <filename>
+# queued to <blogname>
+# according to settings contained in optional <config-filename>
 def batch_post_poems(blogname, filename, setting):
     def get_batch_tags(filename):
         c = config.app_config(filename)
         return c['batch-tags']
+    def authorize_from_config(filename):
+        c = config.app_config(filename)
+        return authorize.authorize(c['key'], c['secret'], c['callback'])
+
 
     batch = get_batch_tags(os.path.realpath(setting))
     auth  = authorize_from_config( \
@@ -57,6 +62,8 @@ def batch_post_poems(blogname, filename, setting):
             batch
             )
 
+# Helpfully display all of the poems
+# that are contained in a file
 def display_poems_in_file(filename):
     print('Found the following poems:')
     poems = poems_from_file(os.path.realpath(filename))
