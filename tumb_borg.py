@@ -57,15 +57,17 @@ def batch_post_poems(blogname, filename, setting):
             batch
             )
 
+def display_poems_in_file(filename):
+    print('Found the following poems:')
+    poems = poems_from_file(os.path.realpath(filename))
+    for poem in poems:
+        interactive.print_poem_full(poem)
 
 if __name__ == "__main__":
     validate_arguments(sys.argv)
 
     if len(sys.argv) < 3:
-        print('Found the following poems:')
-        poems = poems_from_file(os.path.realpath(sys.argv[1]))
-        for poem in poems:
-            interactive.print_poem_full(poem)
+        display_poems_in_file(sys.argv[1])
     else:
         # ./tumb_borg.py <blogname> <filename> [<settings-file>]
         if len(sys.argv) < 4: # TODO: Make this default argument-able
