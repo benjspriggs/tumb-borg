@@ -63,9 +63,11 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 3:
         print('Found the following poems:')
-        for poem in poems_from_file( \
-                os.path.realpath(sys.argv[1])):
+        poems = poems_from_file(os.path.realpath(sys.argv[1]))
+        for poem in poems:
             interactive.print_poem_full(poem)
+        poems = poems_from_file(os.path.realpath(sys.argv[1]))
+        interactive.save_poems('test.txt', poems)
     else:
         # ./tumb_borg.py <blogname> <filename> [<settings-file>]
         if len(sys.argv) < 4: # TODO: Make this default argument-able
