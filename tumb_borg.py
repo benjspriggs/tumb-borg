@@ -73,12 +73,16 @@ def display_poems_in_file(filename):
 if __name__ == "__main__":
     validate_arguments(sys.argv)
 
+    def secret_path(secret_fn='app.secret.yml'):
+        dirname = os.path.dirname(os.path.realpath(__file__))
+        return os.path.join(dirname, secret_fn)
+
     if len(sys.argv) < 3:
         display_poems_in_file(sys.argv[1])
     else:
         # ./tumb_borg.py <blogname> <filename> [<settings-file>]
         if len(sys.argv) < 4: # TODO: Make this default argument-able
-            settings = 'app.secret.yml'
+            settings = secret_path()
         else:
             settings = sys.argv[3]
         batch_post_poems(sys.argv[1], sys.argv[2], settings)
