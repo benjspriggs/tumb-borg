@@ -8,7 +8,6 @@ setup(name='tumb-borg',
     license='Apache 3.0',
     description='Simple poetry uploader.',
     install_requires = [
-        'selenium',
         'python-tumblpy',
         'pyyaml'
         ],
