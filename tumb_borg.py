@@ -6,7 +6,7 @@ from pprint import pprint
 
 def usage():
     print('usage: ./tumb_borg.py <blogname> <filename> [<config-filename>]')
-    print('to see what would be posted: ./tumb_borg.py <filenames>')
+    print('To see what would be queued: ./tumb_borg.py <filenames>')
     sys.exit(1)
 
 def validate_arguments(argv):
