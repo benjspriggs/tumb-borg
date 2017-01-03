@@ -6,7 +6,7 @@ try:
 except ImportError:
     from urlparse import urlparse, parse_qs
 
-# obtain authorization token info from tumblr
+# obtain authorization token info from Tumblr
 def authorize(KEY, SECRET, CALLBACK):
     # STEP 1: Obtain the authorization properties
     # Returns a dict containing the following keys:
