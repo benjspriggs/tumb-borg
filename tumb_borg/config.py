@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
-import yaml
-import sys
+import sys, yaml
 
 def read_yaml(filename, readf=yaml.load):
     try:
