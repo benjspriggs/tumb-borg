@@ -35,11 +35,12 @@ def batch_post_poems(blogname, filename, setting):
 
     def get_batch_tags():
         return c['batch-tags']
-    def valid_stored_tokens():
+    # returns if the keys exist in the config dictionary
+    def config_has_stored_tokens():
         return 'oauth_token' in c and 'oauth_token_secret' in c
     def authorize_from_config():
         # attempt to authorize from config
-        if valid_stored_tokens():
+        if config_has_stored_tokens():
             return authorize.authorized_t(c['key'], c['secret'], c)
         else:
             a = authorize.authorize(c['key'], c['secret'], c['callback'])
@@ -49,7 +50,7 @@ def batch_post_poems(blogname, filename, setting):
     batch   = get_batch_tags()
     auth    = authorize_from_config()
 
-    if not valid_stored_tokens():
+    if not config_has_stored_tokens():
         # store the key for now TODO: implement
         c['oauth_token'] = a['oauth_token']
         c['oauth_token_secret'] = a['oauth_token_secret']
