@@ -6,6 +6,7 @@ try:
 except ImportError:
     from urlparse import urlparse, parse_qs
 
+# obtain authorization token info from tumblr
 def authorize(KEY, SECRET, CALLBACK):
     def get_authorization_properties():
         t = T(KEY, SECRET)
@@ -36,10 +37,9 @@ def authorize(KEY, SECRET, CALLBACK):
                 auth_p['oauth_token_secret'])
         return t.get_authorized_tokens(q['oauth_verifier'])
 
-    def authorized_t():
-        a = authorized_tokens()
-        return T(KEY, SECRET, 
-                a['oauth_token'], 
-                a['oauth_token_secret'])
+    return authorized_tokens()
   
-    return authorized_t()
+def authorized_t(KEY, SECRET, auth):
+    return T(KEY, SECRET,
+            auth['oauth_token'], 
+            auth['oauth_token_secret'])

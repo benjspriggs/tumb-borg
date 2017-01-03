@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import sys, os
-from lib import *
+from tumb_borg import *
 from pprint import pprint
 
 def usage():
@@ -10,9 +10,12 @@ def usage():
     sys.exit(1)
 
 def validate_arguments(argv):
-    if len(argv) < 3 \
-    and (len (argv) is 1 \
-        and not os.path.exists(argv[1])):
+    try:
+        if len(argv) < 3 \
+        and (len (argv) is 1 \
+            and not os.path.exists(argv[1])):
+            usage()
+    except Exception:
         usage()
 
 # returns a generator for poems from a filename
@@ -27,19 +30,30 @@ def poems_from_file(filename):
 # queued to <blogname>
 # according to settings contained in optional <config-filename>
 def batch_post_poems(blogname, filename, setting):
-    def get_batch_tags(filename):
-        c = config.app_config(filename)
+    c = config.app_config(setting)
+    a = {}
+
+    def get_batch_tags():
         return c['batch-tags']
-    def authorize_from_config(filename):
-        c = config.app_config(filename)
-        return authorize.authorize(c['key'], c['secret'], c['callback'])
+    def valid_stored_tokens():
+        return 'oauth_token' in c and 'oauth_token_secret' in c
+    def authorize_from_config():
+        # attempt to authorize from config
+        if valid_stored_tokens():
+            return authorize.authorized_t(c['key'], c['secret'], c)
+        else:
+            a = authorize.authorize(c['key'], c['secret'], c['callback'])
+            return authorize.authorized_t(c['key'], c['secret'], a)
 
+    setting = os.path.realpath(setting)
+    batch   = get_batch_tags()
+    auth    = authorize_from_config()
 
-    batch = get_batch_tags(os.path.realpath(setting))
-    auth  = authorize_from_config( \
-            os.path.realpath(setting))
-    # store the key for now TODO: implement
-    # store(app_config())
+    if not valid_stored_tokens():
+        # store the key for now TODO: implement
+        c['oauth_token'] = a['oauth_token']
+        c['oauth_token_secret'] = a['oauth_token_secret']
+        config.store(c, setting)
     # check that the user can post to this blog TODO: implement
     # post poems
     def post_poems(auth,    \
@@ -86,5 +100,6 @@ if __name__ == "__main__":
         else:
             settings = sys.argv[3]
         batch_post_poems(sys.argv[1], sys.argv[2], settings)
+
 
     print('Finished!')
