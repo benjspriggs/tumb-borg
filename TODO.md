@@ -2,3 +2,4 @@
 - [ ] Add color output in interactive modes
 - [ ] Add interactive modes, ways to add/ edit text files and write changes etc 
 - [x] Add way to invalidate cached tokens for sessions
+- [ ] Migrate to a more CLI friendly python library
