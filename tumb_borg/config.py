@@ -10,7 +10,6 @@ def read_yaml(filename, readf=yaml.load):
         print("File '%s' not found." % filename)
         sys.exit(1)
 
-
 def app_config(filename='app.secret.yml'):
     return read_yaml(filename)
 
