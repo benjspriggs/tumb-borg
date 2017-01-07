@@ -33,7 +33,10 @@ def batch_post_poems(blogname, filename, setting):
     c = config.app_config(setting) # load auth settings
 
     def get_batch_tags():
-        return c['batch-tags']
+        try:
+            return c['batch-tags']
+        except KeyError:
+            return ""
     # returns if the keys exist in the config dictionary
     def config_has_stored_tokens():
         return 'oauth_token' in c and 'oauth_token_secret' in c
@@ -60,9 +63,13 @@ def batch_post_poems(blogname, filename, setting):
             return renew_tokens()
 
     setting = os.path.realpath(setting)
-    batch   = get_batch_tags()
     auth    = authorize_from_config()
+    batch   = get_batch_tags()
     config.store(c, setting)
+    if not authorize.has_posting_permissions(auth, blogname):
+        raise Exception( \
+                "The currently authorized user does not have permission to post to the blog: '%s'" \
+                % blogname)
 
     # check that the user can post to this blog TODO: implement
     # post poems
@@ -77,7 +84,7 @@ def batch_post_poems(blogname, filename, setting):
                     'body':  '\n'.join(payload['content']),
                     'title': '// %s' % payload['title'] }
         for poem in (queue_text_post(p) for p in poem_generator):
-            print(poem)
+            interactive.print_poem(poem)
             print(auth.post('post', blog_url=ident, \
                     params=poem))
     post_poems(auth, \
