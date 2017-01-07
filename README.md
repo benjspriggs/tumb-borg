@@ -3,7 +3,7 @@ A tumblr poetry uploader.
 
 ## Run
 ```
-python tumb_borg.py <blog-identifier> <filename>
+./tumb_borg.py <blog-identifier> <filename>
 ```
 Will load all poems in filename and queue it on the blog given in the argument.
 [Requires app credentials to run](https://www.tumblr.com/docs/en/api/v2).
