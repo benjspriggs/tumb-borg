@@ -87,3 +87,35 @@ def has_valid_tokens(auth_t, to_blog):
         is not None
     except Exception:
         return False
+
+# Determines, from an authorized TumblPy instance,
+# whether the user that has given permission to the
+# app has permission to post or queue posts on the
+# requested blogname
+def has_posting_permissions(auth_t, blog_ident):
+    try:
+        user_info = auth_t.get('user/info')
+        from pprint import pprint
+        blogs = user_info['user']['blogs']
+        blog_urls = [ blog['url'] for blog in blogs ]
+
+        # return if ident is the blog-identifier for 
+        # the blog located at url
+        def compare_blogname(url, ident):
+            def is_standard(ident):
+                return ".tumblr.com" in ident
+
+            def is_custom(ident):
+                return False
+
+            if is_standard(ident):
+                return ident in url
+            elif is_custom(ident):
+                return ident is url
+            else:
+                return False
+
+        return len(filter(lambda url: compare_blogname(url, blog_ident), \
+                blog_urls)) is 1
+    except Exception:
+        return False
