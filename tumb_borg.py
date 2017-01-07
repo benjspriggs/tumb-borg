@@ -96,7 +96,7 @@ if __name__ == "__main__":
         display_poems_in_file(sys.argv[1])
     else:
         # ./tumb_borg.py <blogname> <filename> [<settings-file>]
-        if len(sys.argv) < 4: # TODO: Make this default argument-able
+        if len(sys.argv) < 4:
             settings = secret_path()
         else:
             settings = sys.argv[3]
