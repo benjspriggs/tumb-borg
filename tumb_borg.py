@@ -50,7 +50,7 @@ def batch_post_poems(blogname, filename, setting):
                     c['secret'], \
                     c)
             # now to validate the tokens
-            if not has_valid_tokens(auth_t, blogname): # check
+            if not authorize.has_valid_tokens(auth_t, blogname): # check
                 # renew the tokens
                 return renew_tokens()
             else:
