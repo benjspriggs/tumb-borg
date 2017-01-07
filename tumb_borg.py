@@ -69,7 +69,7 @@ def batch_post_poems(blogname, filename, setting):
                     'title': '// %s' % payload['title'] }
         for poem in (queue_text_post(p) for p in poem_generator):
             print(poem)
-            print(auth.post('post'. blog_url=ident, \
+            print(auth.post('post', blog_url=ident, \
                     params=poem))
     post_poems(auth, \
             blogname, \
