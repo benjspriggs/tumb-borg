@@ -40,7 +40,6 @@ def batch_post_poems(blogname, filename, setting):
     def authorize_from_config():
         def renew_tokens():
             a = authorize.authorize(c['key'], c['secret'], c['callback'])
-            pprint(a)
             a_t = authorize.authorized_t(c['key'], c['secret'], a)
             c['oauth_token'] = a_t.oauth_token
             c['oauth_token_secret'] = a_t.oauth_token_secret
@@ -63,11 +62,8 @@ def batch_post_poems(blogname, filename, setting):
     setting = os.path.realpath(setting)
     batch   = get_batch_tags()
     auth    = authorize_from_config()
+    config.store(c, setting)
 
-    if not config_has_stored_tokens():
-        # store the key for now TODO: implement
-        pprint(c) # debug statement
-        config.store(c, setting)
     # check that the user can post to this blog TODO: implement
     # post poems
     def post_poems(auth,    \
