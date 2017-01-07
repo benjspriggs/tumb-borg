@@ -39,10 +39,11 @@ def batch_post_poems(blogname, filename, setting):
         return 'oauth_token' in c and 'oauth_token_secret' in c
     def authorize_from_config():
         def renew_tokens():
-            a = authorize.authorized_t(c['key'], c['secret'], c['callback'])
-            c['oauth_token'] = a.oauth_token
-            c['oauth_token_secret'] = a.oauth_token_secret
-            return a
+            a = authorize.authorize(c['key'], c['secret'], c['callback'])
+            a_t = authorized_t(a['key'], a['secret'], a)
+            c['oauth_token'] = a_t.oauth_token
+            c['oauth_token_secret'] = a_t.oauth_token_secret
+            return a_t
         # attempt to authorize from config
         if config_has_stored_tokens():
             auth_t = authorize.authorized_t(c['key'], \
