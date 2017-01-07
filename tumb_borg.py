@@ -38,10 +38,21 @@ def batch_post_poems(blogname, filename, setting):
     def config_has_stored_tokens():
         return 'oauth_token' in c and 'oauth_token_secret' in c
     def authorize_from_config():
+        def renew_tokens():
+            return authorize.authorize(c['key'], c['secret'], c['callback'])
         # attempt to authorize from config
-        if not config_has_stored_tokens():
-            new_c = authorize.authorize(c['key'], c['secret'], c['callback'])
-        return authorize.authorized_t(c['key'], c['secret'], new_c)
+        if config_has_stored_tokens():
+            auth_t = authorize.authorized_t(c['key'], \
+                    c['secret'], \
+                    c)
+            # now to validate the tokens
+            if not has_valid_tokens(auth_t, blogname): # check
+                # renew the tokens
+                return renew_tokens()
+            else:
+                return c
+        else:
+            return renew_tokens()
 
     setting = os.path.realpath(setting)
     batch   = get_batch_tags()
