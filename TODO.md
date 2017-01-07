@@ -1,4 +1,4 @@
 - [x] Add a way to store the token for a session, or store authentication for multiple consecutive requests.
 - [ ] Add color output in interactive modes
 - [ ] Add interactive modes, ways to add/ edit text files and write changes etc 
-- [ ] Add way to invalidate cached tokens for sessions
+- [x] Add way to invalidate cached tokens for sessions
