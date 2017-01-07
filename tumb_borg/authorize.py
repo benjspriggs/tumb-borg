@@ -69,6 +69,7 @@ def authorized_t(KEY, SECRET, auth):
 # return whether the information represents
 # a valid token that can be used for future
 # transactions
+# params: to_blog is a string that is the blog identifier
 def verify_tokens(auth_t, to_blog):
     if to_blog is None \
     or auth_t.app_key is None \
@@ -81,7 +82,7 @@ def verify_tokens(auth_t, to_blog):
     # way to check that tokens are good
     # TODO: Verify that this is the only way
     try:
-        return auth_t.get('blog/avatar', blog_url=to_blog,
+        return auth_t.get('avatar', blog_url=to_blog,
                 params={ 'blog-identifier': to_blog, 'size': 16 }) \
         is not None
     except Exception:
