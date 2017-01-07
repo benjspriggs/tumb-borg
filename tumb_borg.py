@@ -39,7 +39,7 @@ def batch_post_poems(blogname, filename, setting):
         return 'oauth_token' in c and 'oauth_token_secret' in c
     def authorize_from_config():
         def renew_tokens():
-            return authorize.authorize(c['key'], c['secret'], c['callback'])
+            return authorize.authorize_t(c['key'], c['secret'], c['callback'])
         # attempt to authorize from config
         if config_has_stored_tokens():
             auth_t = authorize.authorized_t(c['key'], \
@@ -50,7 +50,7 @@ def batch_post_poems(blogname, filename, setting):
                 # renew the tokens
                 return renew_tokens()
             else:
-                return c
+                return auth_t
         else:
             return renew_tokens()
 
