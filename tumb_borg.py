@@ -30,8 +30,7 @@ def poems_from_file(filename):
 # queued to <blogname>
 # according to settings contained in optional <config-filename>
 def batch_post_poems(blogname, filename, setting):
-    c = config.app_config(setting)
-    a = {}
+    c = config.app_config(setting) # load auth settings
 
     def get_batch_tags():
         return c['batch-tags']
@@ -40,11 +39,9 @@ def batch_post_poems(blogname, filename, setting):
         return 'oauth_token' in c and 'oauth_token_secret' in c
     def authorize_from_config():
         # attempt to authorize from config
-        if config_has_stored_tokens():
-            return authorize.authorized_t(c['key'], c['secret'], c)
-        else:
-            a = authorize.authorize(c['key'], c['secret'], c['callback'])
-            return authorize.authorized_t(c['key'], c['secret'], a)
+        if not config_has_stored_tokens():
+            c = authorize.authorize(c['key'], c['secret'], c['callback'])
+        return authorize.authorized_t(c['key'], c['secret'], c)
 
     setting = os.path.realpath(setting)
     batch   = get_batch_tags()
@@ -52,8 +49,7 @@ def batch_post_poems(blogname, filename, setting):
 
     if not config_has_stored_tokens():
         # store the key for now TODO: implement
-        c['oauth_token'] = a['oauth_token']
-        c['oauth_token_secret'] = a['oauth_token_secret']
+        pprint(c) # debug statement
         config.store(c, setting)
     # check that the user can post to this blog TODO: implement
     # post poems
