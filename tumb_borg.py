@@ -40,8 +40,8 @@ def batch_post_poems(blogname, filename, setting):
     def authorize_from_config():
         # attempt to authorize from config
         if not config_has_stored_tokens():
-            c = authorize.authorize(c['key'], c['secret'], c['callback'])
-        return authorize.authorized_t(c['key'], c['secret'], c)
+            new_c = authorize.authorize(c['key'], c['secret'], c['callback'])
+        return authorize.authorized_t(c['key'], c['secret'], new_c)
 
     setting = os.path.realpath(setting)
     batch   = get_batch_tags()
