@@ -70,7 +70,7 @@ def authorized_t(KEY, SECRET, auth):
 # a valid token that can be used for future
 # transactions
 # params: to_blog is a string that is the blog identifier
-def verify_tokens(auth_t, to_blog):
+def has_valid_tokens(auth_t, to_blog):
     if to_blog is None \
     or auth_t.app_key is None \
     or auth_t.app_secret is None \
