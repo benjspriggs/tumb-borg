@@ -16,7 +16,8 @@ def app_config(filename='app.secret.yml'):
 def store(yaml_obj, filename):
     with open(filename, 'wb') as f:
         yaml.dump(yaml_obj, f, \
-                default_flow_style=False)
+                default_flow_style=False,\
+                explicit_start=True)
 
 def user_config(filename='user.secret.yml'):
     return read_yaml(filename)
