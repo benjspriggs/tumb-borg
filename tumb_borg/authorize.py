@@ -64,3 +64,25 @@ def authorized_t(KEY, SECRET, auth):
     return T(KEY, SECRET,
             auth['oauth_token'], 
             auth['oauth_token_secret'])
+
+# Given an authorized TumblPy instance,
+# return whether the information represents
+# a valid token that can be used for future
+# transactions
+def verify_tokens(auth_t, to_blog):
+    if to_blog is None \
+    or auth_t.app_key is None \
+    or auth_t.app_secret is None \
+    or auth_t.oauth_token is None \
+    or auth_t.oauth_token_secret is None:
+        return False
+    # attempt to retrieve blog's avatar
+    # for now, since there's not a clear
+    # way to check that tokens are good
+    # TODO: Verify that this is the only way
+    try:
+        return auth_t.get('blog/avatar', blog_url=to_blog,
+                params={ 'blog-identifier': to_blog, 'size': 16 }) \
+        is not None
+    except Exception:
+        return False
