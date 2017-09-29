@@ -81,7 +81,7 @@ def batch_post_poems(blogname, filename, setting):
             return { 'type': 'text',
                     'state': 'queue',
                     'tags':  ', '.join(payload['tags']) + ", " + BATCH,
-                    'body':  '\n'.join(payload['content']),
+                    'body':  '<br/>\n'.join(payload['content']),
                     'title': '// %s' % payload['title'] }
         for poem in (queue_text_post(p) for p in poem_generator):
             interactive.print_poem(poem)
